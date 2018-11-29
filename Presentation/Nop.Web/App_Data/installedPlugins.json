@@ -1,0 +1,16 @@
+﻿[
+  "DiscountRequirement.MustBeAssignedToCustomerRole",
+  "CurrencyExchange.ECB",
+  "ExternalAuth.Facebook",
+  "Payments.CheckMoneyOrder",
+  "Pickup.PickupInStore",
+  "Shipping.FixedByWeightByTotal",
+  "Tax.FixedOrByCountryStateZip",
+  "Widgets.GoogleAnalytics",
+  "Widgets.Carousel",
+  "Widgets.Banner",
+  "Widgets.ABanner",
+  "Widgets.NivoSlider",
+  "Widgets.HeaderContactDetails",
+  "Payments.IyzicoPay"
+]

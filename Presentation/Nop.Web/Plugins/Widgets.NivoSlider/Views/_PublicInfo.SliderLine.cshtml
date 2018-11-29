@@ -1,0 +1,29 @@
+﻿@model Nop.Plugin.Widgets.NivoSlider.Models.PublicInfoModel
+
+@{
+    var pictureUrl = ViewData["pictureUrl"]?.ToString() ?? "";
+    var link = ViewData["link"]?.ToString() ?? "";
+    var dataTransition = ViewData["dataTransition"]?.ToString() ?? "";
+    var text = ViewData["text"]?.ToString() ?? "";
+    var alttext = ViewData["alttext"]?.ToString() ?? "";
+
+    if (!string.IsNullOrEmpty(pictureUrl))
+    {
+        <div class="item">
+            <div class="item-shop-slider">
+                <div class="shop-slider-thumb">
+                    <img src="@pictureUrl" data-thumb="@pictureUrl" data-transition="@dataTransition" alt="@alttext" title="@text" />
+                </div>
+                <div class="shop-slider-info">
+                    <h3>@text</h3>
+                    <h2>@alttext</h2>
+                    @if (!string.IsNullOrEmpty(link))
+                    {
+                        <a href="@link" class="shop-now">@T("slider.buyNow")</a>
+                    }
+                </div>
+            </div>
+        </div>
+
+    }
+}

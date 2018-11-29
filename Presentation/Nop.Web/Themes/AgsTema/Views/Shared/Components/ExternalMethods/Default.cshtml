@@ -1,0 +1,17 @@
+﻿@model List<ExternalAuthenticationMethodModel>
+
+@if (Model.Any())
+{
+
+
+    foreach (var authenticationMethod in Model)
+    {
+        @await Component.InvokeAsync(authenticationMethod.ViewComponentName)
+      
+        
+        
+
+    }
+
+
+}

@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "";
+    Html.AddCssFileParts("~/Plugins/ExternalAuth.Facebook/Content/facebookstyles.css");    
+}
+
+    
+        <a asp-controller="facebookauthentication" asp-action="login" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]">
+            <img src="images/facebook.png" title="Facebook ile Giriş Yapın"/>
+        </a>
+    

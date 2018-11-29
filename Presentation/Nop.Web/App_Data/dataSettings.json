@@ -1,0 +1,16 @@
+﻿{
+  "DataProvider": "sqlserver",
+  "DataConnectionString": "Data Source=ASUSN56VZ;Initial Catalog=ags_atak_db;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=123",
+  "RawDataSettings": {}
+}
+
+//{
+//  "DataProvider": "sqlserver",
+//  "DataConnectionString": "Data Source=ASUSN56VZ;Initial Catalog=palmerodb;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=123",
+//  "RawDataSettings": {}
+//}
+//{
+//  "DataProvider": "sqlserver",
+//  "DataConnectionString": "Data Source=77.223.141.197\\MSSQLSERVER2012;Initial Catalog=ags_palmerodb;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=AgS7xXpjT5@",
+//  "RawDataSettings": {}
+//}

@@ -1,0 +1,295 @@
+﻿@model Nop.Plugin.Payments.IyzicoPay.Models.PaymentInfoModel
+@{
+    Layout = "";
+
+}
+
+<style>
+    div.blueTable {
+        border: 1px solid #1C6EA4;
+        background-color: #EEEEEE;
+        width: 100%;
+        text-align: left;
+        border-collapse: collapse;
+    }
+
+    .divTable.blueTable .divTableCell, .divTable.blueTable .divTableHead {
+        border: 1px solid #AAAAAA;
+        padding: 3px 2px;
+    }
+
+    .divTable.blueTable .divTableBody .divTableCell {
+        font-size: 13px;
+    }
+
+    .divTable.blueTable .divTableRow:nth-child(even) {
+        background: #D0E4F5;
+    }
+
+    .divTable.blueTable .divTableHeading {
+        background: #1C6EA4;
+        background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+        background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+        background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+        border-bottom: 2px solid #444444;
+    }
+
+        .divTable.blueTable .divTableHeading .divTableHead {
+            font-size: 15px;
+            font-weight: bold;
+            color: #FFFFFF;
+            border-left: 2px solid #D0E4F5;
+        }
+
+            .divTable.blueTable .divTableHeading .divTableHead:first-child {
+                border-left: none;
+            }
+
+    .blueTable .tableFootStyle {
+        font-size: 14px;
+        font-weight: bold;
+        color: #FFFFFF;
+        background: #D0E4F5;
+        background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+        background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+        background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+        border-top: 2px solid #444444;
+    }
+
+    .blueTable .tableFootStyle {
+        font-size: 14px;
+    }
+
+        .blueTable .tableFootStyle .links {
+            text-align: right;
+        }
+
+            .blueTable .tableFootStyle .links a {
+                display: inline-block;
+                background: #1C6EA4;
+                color: #FFFFFF;
+                padding: 2px 8px;
+                border-radius: 5px;
+            }
+
+    .blueTable.outerTableFooter {
+        border-top: none;
+    }
+
+        .blueTable.outerTableFooter .tableFootStyle {
+            padding: 3px 5px;
+        }
+    /* DivTable.com */
+    .divTable {
+        display: table;
+    }
+
+    .divTableRow {
+        display: table-row;
+    }
+
+    .divTableHeading {
+        display: table-header-group;
+    }
+
+    .divTableCell, .divTableHead {
+        display: table-cell;
+    }
+
+    .divTableHeading {
+        display: table-header-group;
+    }
+
+    .divTableFoot {
+        display: table-footer-group;
+    }
+
+    .divTableBody {
+        display: table-row-group;
+    }
+</style>
+<div id="iyzico-payment">
+<table width="100%" cellspacing="2" cellpadding="1" border="0">
+    <tr>
+        <td>
+            <label asp-for="IdentityNumber">@T("Payment.IdentityNumber"):</label>
+        </td>
+        <td>
+            <input type="text" asp-for="IdentityNumber"  autocomplete="off" maxlength="22" placeholder="@T("Payment.IdentityNumber.Placeholder")" />
+            <span asp-validation-for="IdentityNumber"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label asp-for="CardholderName">@T("Payment.CardholderName"):</label>
+        </td>
+        <td>
+            <input type="text" asp-for="CardholderName"  autocomplete="off" maxlength="22" placeholder="@T("Payment.CardholderName.Placeholder")"/>
+            <span asp-validation-for="CardholderName"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label asp-for="CardNumber">@T("Payment.CardNumber"):</label>
+        </td>
+        <td>
+            <input type="text" asp-for="CardNumber"  autocomplete="off" maxlength="22" placeholder="@T("Payment.CardNumber.Placeholder")" onpaste="return false;"/>
+            <span asp-validation-for="CardNumber"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label asp-for="ExpireMonth">@T("Payment.ExpirationDate"):</label>
+        </td>
+        <td>
+            <select asp-for="ExpireMonth" asp-items="Model.ExpireMonths"></select>
+            /
+            <select asp-for="ExpireYear" asp-items="Model.ExpireYears"></select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label asp-for="CardCode">@T("Payment.CardCode"):</label>
+        </td>
+        <td>
+            <input type="text" asp-for="CardCode"  autocomplete="off" maxlength="4" placeholder="@T("Payment.CardCode.Placeholder")"/>
+            <span asp-validation-for="CardCode"></span>
+        </td>
+    </tr>
+    <tr id="trcreditcart" style="display: none">
+        <td></td>
+        <td>
+            <select asp-for="CreditCardType" asp-items="Model.CreditCardTypes" disabled="disabled"></select>
+            <select asp-for="CardFamilyName" asp-items="Model.CardFamilyNames" disabled="disabled"></select>
+        </td>
+    </tr>
+    <tr style="display: none" id="trBankaAdi">
+        <td>
+            <label> Banka Adı:</label>
+        </td>
+        <td>
+            <input type="text" id="bankname" name="bankname" disabled="disabled"/>
+        </td>
+    </tr>
+    <tr id="trRadioTaksit" style="display: none">
+        <td> </td>
+        <td>
+            <div class="divTable blueTable">
+                <div class="divTableHeading">
+                    <div class="divTableRow">
+                        <div class="divTableHead">Taksit</div>
+                        <div class="divTableHead">Aylık Ödeme</div>
+                        <div class="divTableHead">Toplam Tutar</div>
+                    </div>
+                </div>
+                <div class="divTableBody" id="radiolist">
+
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+<input type="hidden" id="force3ds" name="force3ds" value="" />
+    <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
+    </div>
+<script asp-location="Footer">
+    String.prototype.toCardFormat = function () {
+        return this.replace(/[^0-9]/g, "").substr(0, 16).split("").reduce(cardFormat, "");
+        function cardFormat(str, l, i) {
+            return str + ((!i || (i % 4)) ? "" : "-") + l;
+        }
+    };
+    $(document).ready(function () {
+        $('#CardholderName').keyup(function () {
+            var str = jQuery('#CardholderName').val();
+
+            var spart = str.split(" ");
+            for (var i = 0; i < spart.length; i++) {
+                var j = spart[i].charAt(0).toUpperCase();
+                spart[i] = j + spart[i].substr(1);
+            }
+            $('#CardholderName').val(spart.join(" "));
+
+        });
+        $("#CardNumber").keyup(function (e) {
+            $(this).val($(this).val().toCardFormat());
+            var cardnumbers = $(this).val($(this).val().toCardFormat());
+            if (cardnumbers.val().length === 7) {
+                var posData = { cardnumber: cardnumbers.val().replace('-', '').trim() };
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    url: '@Url.Action("BinControl", "PaymentIyzicoPay")',
+                    data: posData,
+                    dataType: 'json',
+                    success: function (data) {
+                       
+                        if (data.InstallmentDetails["0"].CardAssociation != null) {
+
+                            $('#trcreditcart').show();
+                            $('#CreditCardType').val('');
+                            $('#CreditCardType').val(data.InstallmentDetails["0"].CardAssociation);
+                            $('#trcreditcartfamily').show();
+                            $('#CardFamilyName').val('');
+                            $('#CardFamilyName').val(data.InstallmentDetails["0"].CardFamilyName);
+                            $('#trBankaAdi').show();
+                            $('#bankname').val('');
+                            $('#bankname').val(data.InstallmentDetails["0"].BankName);
+                            $('#force3ds').val(data.InstallmentDetails["0"].Force3Ds);
+
+                        }
+                        if (data.InstallmentDetails["0"].InstallmentPrices != null) {
+                            var statesProgress = $("#states-loading-progress");
+                            var list = $('.divTableBody');
+                            $('#trRadioTaksit').show();
+                            statesProgress.show();
+                            list.html('');
+                            for (var i = 0; i < data.InstallmentDetails["0"].InstallmentPrices.length; i++) {
+
+                                list.append('<div class="divTableRow"><div class="divTableCell"><input type="radio" id="Installments" value="'
+                                    + data.InstallmentDetails["0"].InstallmentPrices[i].TotalPrice
+                                    + '-'+ data.InstallmentDetails["0"].InstallmentPrices[i].InstallmentNumber
+                                    + '" name="Installments" />'
+                                    + data.InstallmentDetails["0"].InstallmentPrices[i].InstallmentNumber
+                                    + ' X</div><div class="divTableCell">'
+                                    + data.InstallmentDetails["0"].InstallmentPrices[i].InstallmentPrice
+                                    + ' </div><div class="divTableCell">'
+                                    + data.InstallmentDetails["0"].InstallmentPrices[i].TotalPrice + '</div></div>');
+                            }
+                            
+                            $('#radiolist input[type=radio]:first').attr('checked', 'checked');
+                            statesProgress.hide();
+                        }
+
+
+                    },
+                    failure: function () {
+
+                    }
+                });
+
+            }
+            if (e.which === 8) {
+                var cardnum = $('#CardNumber').val();
+                if (cardnum.length === 6) {
+                $('#trcreditcart').hide();
+                $('#CreditCardType').val('');
+                $('#trcreditcartfamily').hide();
+                $('#CardFamilyName').val('');
+                $('#trBankaAdi').hide();
+                $('#bankName').text('');
+                $('#trRadioTaksit').hide();
+                var list = $('.divTableBody');
+                list.html('');
+                }
+            }
+
+        });
+    
+
+
+    });
+
+
+
+</script>
